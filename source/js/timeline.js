@@ -4269,6 +4269,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		vimeo: {
 			
+                        
+                        //XXX
+                        
 			get: function(m) {
 				VMM.master_config.vimeo.que.push(m);
 				VMM.master_config.vimeo.active = true;
@@ -5168,7 +5171,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		this.init = function(d) {
 			slides			= [];
 			slide_positions	= [];
-			
+			current_slide = 0;
+                        
 			if(typeof d != 'undefined') {
 				this.setData(d);
 			} else {
@@ -5348,6 +5352,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		}
 		
+                //XXX
+                VMM.bindEvent(global, onChangeSlide,"TEST");
+                
+                function onChangeSlide(e,n){
+                        goToSlide(n);
+                        upDate();
+                }
+                
 		function onPrevClick(e) {
 			if (current_slide == 0) {
 				backToCurrentSlide();
@@ -7038,11 +7050,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				flickr:				"",
 				twitter:			""
 			},
-			interval: 				10,
+			interval: 				5,
 			something: 				0,
 			width: 					960,
 			height: 				540,
-			spacing: 				15,
+			spacing: 				5,
 			loaded: {
 				slider: 			false, 
 				timenav: 			false, 
