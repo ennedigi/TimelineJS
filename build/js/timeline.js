@@ -4278,8 +4278,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				trace("VIMEO CREATE");
 				
 				// THUMBNAIL
-				var thumb_url	= "//vimeo.com/api/v2/video/" + m.id + ".json",
-					video_url	= "//player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff";
+				var thumb_url	= m.id,
+					video_url	= m.id;
 					
 				VMM.getJSON(thumb_url, function(d) {
 					VMM.ExternalAPI.vimeo.createThumb(d, m);
@@ -5271,7 +5271,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.width($slides_items, (slides.length * config.slider.content.width));
 			
 			if (_from_start) {
+                            if (slides[current_slide]){
 				VMM.Lib.css($slider_container, "left", slides[current_slide].leftpos());
+                            } else {
+                                VMM.Lib.css($slider_container, "left", slides[0]);
+                            }
 			}
 			
 			// RESIZE SLIDES
@@ -7393,14 +7397,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			trace("iframeLoaded");
 		};
 		
-		this.reload = function(_d) {
+		this.reload = function(_d,slideN) {
 			trace("Load new timeline data" + _d);
 			VMM.fireEvent(global, config.events.messege, config.language.messages.loading_timeline);
 			data = {};
+			config.current_slide = slideN || 0;
 			VMM.Timeline.DataObj.getData(_d);
-			config.current_slide = 0;
-			slider.setSlide(0);
-			timenav.setMarker(0, config.ease,config.duration);
+			slider.setSlide(config.current_slide);
+			timenav.setMarker(config.current_slide, config.ease,config.duration);
 		};
 		
 		/* DATA 
